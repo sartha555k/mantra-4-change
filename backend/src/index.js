@@ -10,7 +10,15 @@ const grantRoutes = require('./routes/grants');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://mantra-4-change.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use('/images', express.static(path.resolve(__dirname, '../../images')));
