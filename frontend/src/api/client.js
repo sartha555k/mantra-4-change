@@ -1,7 +1,10 @@
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL + '/api';
+
+console.log("VITE_API_URL =", import.meta.env.VITE_API_URL);
 
 async function request(path, params = {}) {
-  const url = new URL(`${API_BASE}${path}`, window.location.origin);
+  const url = new URL(`${API_BASE}${path}`);
+
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') {
       url.searchParams.set(key, value);
@@ -13,6 +16,7 @@ async function request(path, params = {}) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.error || `Request failed: ${res.status}`);
   }
+
   return res.json();
 }
 
